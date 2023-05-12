@@ -1,0 +1,35 @@
+{
+  "port": 8080,
+  "basepath": "/go-server/v1",
+  "logger": {
+    "exclude_urls": ["/metrics"]
+  },
+  "log_file": {
+    "max_size": 1,
+    "max_backups": 5,
+    "max_age": 5
+  },
+  "token_clients": [
+    {
+      "key": "APIGWTokenClient",
+      "basepath": "https://apiinternos.movistar.com.ar/telefonica/sandbox/v1/oauth2/token",
+      "skip_ssl": true
+    }
+  ],
+  "token_sources": [
+    {
+      "key": "APIGWTokenSource",
+      "client_id": "212a4c4b-c7a0-4b48-818e-4b81b20563ca",
+      "client_secret": "F5sS8wS0eH6vA2dH4eE0gL4bU1rM8nT7qD2rJ1gY7vH6bQ2yS8",
+      "scopes": ["scope1"],
+      "client_key": "APIGWTokenClient"
+    }
+  ],
+  "clients": [
+    {
+      "key": "MockClient",
+      "basepath": "http://localhost:8081/go-mock/v1",
+      "token_source_key": "APIGWTokenSource"
+    }
+  ]
+}

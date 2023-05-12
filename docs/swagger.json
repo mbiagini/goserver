@@ -1,0 +1,133 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Servidor que utiliza el framework chi y expone una API REST.",
+        "title": "Go Chi Server",
+        "contact": {
+            "name": "RedFoxSoft",
+            "email": "support@redfoxsoft.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "description": "Permite la búsqueda de todos los usuarios (no utiliza paginación)",
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Busca todos los usuarios",
+                "operationId": "get-users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserDTO"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gserrors.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Permite crear un nuevo usuario",
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Crea un nuevo usuario",
+                "operationId": "post-user",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gserrors.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Permite la búsqueda de un usuario a través de su ID",
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Busca un usuario por su ID",
+                "operationId": "get-user-by-id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The ID of a user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/UserDTO"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "UserDTO": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "description": "The age of the user",
+                    "type": "integer",
+                    "example": 27
+                },
+                "email": {
+                    "description": "The email of the user",
+                    "type": "string",
+                    "example": "martinbiagini@gmail.com"
+                },
+                "id": {
+                    "description": "The ID to uniquely identify a user",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "The name of the user",
+                    "type": "string",
+                    "example": "Martín"
+                },
+                "surname": {
+                    "description": "The surname of the user",
+                    "type": "string",
+                    "example": "Biagini"
+                }
+            }
+        },
+        "gserrors.Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

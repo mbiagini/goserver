@@ -1,0 +1,91 @@
+definitions:
+  UserDTO:
+    properties:
+      age:
+        description: The age of the user
+        example: 27
+        type: integer
+      email:
+        description: The email of the user
+        example: martinbiagini@gmail.com
+        type: string
+      id:
+        description: The ID to uniquely identify a user
+        example: 1
+        type: integer
+      name:
+        description: The name of the user
+        example: Martín
+        type: string
+      surname:
+        description: The surname of the user
+        example: Biagini
+        type: string
+    type: object
+  gserrors.Error:
+    properties:
+      code:
+        type: integer
+      label:
+        type: string
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: support@redfoxsoft.com
+    name: RedFoxSoft
+  description: Servidor que utiliza el framework chi y expone una API REST.
+  title: Go Chi Server
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      description: Permite la búsqueda de todos los usuarios (no utiliza paginación)
+      operationId: get-users
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/UserDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gserrors.Error'
+      summary: Busca todos los usuarios
+      tags:
+      - Users
+    post:
+      description: Permite crear un nuevo usuario
+      operationId: post-user
+      responses:
+        "201":
+          description: Created
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gserrors.Error'
+      summary: Crea un nuevo usuario
+      tags:
+      - Users
+  /users/{id}:
+    get:
+      description: Permite la búsqueda de un usuario a través de su ID
+      operationId: get-user-by-id
+      parameters:
+      - description: The ID of a user
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/UserDTO'
+      summary: Busca un usuario por su ID
+      tags:
+      - Users
+swagger: "2.0"
